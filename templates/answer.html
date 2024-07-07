@@ -1,0 +1,9 @@
+<!-- <div class="flex items-center">
+    <input type="radio" id="answer-{{.AnswerID}}" name="question-{{.QuestionID}}" value="answer-{{.AnswerID}}">
+    <input type="text" name="question-{{.QuestionID}}-answer-{{.AnswerID}}" placeholder="Answer text..." class="ml-2 rounded-sm border p-1">
+</div> -->
+
+<li class="" style="list-style-type: upper-alpha;">
+    <input type="text" name="question-{{.QuestionID}}-answer-{{.AnswerID}}" placeholder="Answer text..." class="bg-transparent py-1 px-2 text-white border-b border-neutral-600" />
+    <input type="radio" id="answer-{{.AnswerID}}" name="question-{{.QuestionID}}-ca" value="answer-{{.AnswerID}}" />
+</li>
