@@ -6,6 +6,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=add_circle" />
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
         <title>Omnitool.io</title>
@@ -27,7 +28,7 @@
             <h1 class="text-white font-bold text-3xl px-6 py-4 border-b border-neutral-700" id="name">Create Quiz</h1>
             <div class="flex gap-3 px-6 py-4">
                 <input class="rounded-sm bg-neutral-700 px-2 py-1 text-white flex-1" type="text" name="title" placeholder="Title of quiz..." required />
-                <button class="bg-blue-500 rounded-full aspect-square w-9 text-white text-3xl relative hover:bg-blue-600" style="line-height: 36px;" type="submit" hx-post="/add-question" hx-target="#questions-inner" hx-swap="beforeend"><span class="absolute top-[2.5px] left-[9px]">+</span></button>    
+                <button class="bg-blue-500 rounded-full aspect-square w-9 text-white text-5xl pt-[6px] relative hover:bg-blue-600" style="line-height: 30px;" type="submit" hx-post="/add-question" hx-target="#questions-inner" hx-swap="beforeend">+</button>    
             </div>
             <div id="questions" class="flex flex-col gap-3">
                 <div class="flex flex-col" id="questions-inner"></div>
