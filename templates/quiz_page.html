@@ -6,7 +6,7 @@
 				<link rel="preconnect" href="https://fonts.googleapis.com">
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 				<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-				<script src="https://cdn.tailwindcss.com"></script>
+				<link rel="stylesheet" href="/static/css/output.css">
 				<script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
 				<title>Omnitool.io</title>
 			</head>
@@ -17,13 +17,49 @@
                 .quiz-question:nth-child(odd) {
                     background-color: rgb(52,52,52);
                 }
+                /* .quiz-question:not(:first-of-type) {
+                    border-top: solid 1px #404040;
+                } */
 			</style>
-			<body class="bg-neutral-800 h-screen flex items-center justify-center px-3">
-				<nav class="border-neutral-700 border-b w-full p-3 absolute top-0 left-0 pt-4">
+			<body class="bg-neutral-800 h-dvh flex items-center justify-center overflow-hidden">
+				<nav class="border-neutral-700 border-b w-full p-3 fixed top-0 left-0 pt-4 z-20">
 					<a class="text-white text-2xl font-bold" href="/"><span class="text-neutral-500 pr-1"><</span>Omnitool<span class="text-neutral-500">.</span><span class="text-blue-500">io</span><span class="text-neutral-500 pl-1">/></span></a>
 				</nav>
-				<div class="border rounded-md border-neutral-700 w-full max-w-[800px] max-h-[800px] overflow-y-scroll flex flex-col">
-					<div class="flex flex-col items-start justify-between py-4 px-6">
+
+
+                <div class="pt-[61px] sm:pt-[73px] sm:pb-3 w-full h-full flex items-start justify-start sm:items-center sm:justify-center">
+                    <div class="h-full w-full sm:max-w-[800px] flex flex-col sm:items-center sm:justify-center overflow-y-scroll sm:border sm:border-neutral-700 sm:rounded-lg z-10">
+                        <form class="flex flex-col relative z-10 w-full" id="questions" hx-get="/check-quiz?data={{ .quiz.CorrectAnswers }}" hx-target="#score" hx-swap="innerHTML">
+                            <div class="sm:px-6 px-3 py-3 pb-3 bg-neutral-800">
+                                <a href="/quiz?data={{.data}}" class="text-neutral-200 font-bold text-xl sm:text-3xl hover:underline">{{ .quiz.Title }}</a>
+                                <p class="text-neutral-500 text-sm sm:text-md">This quiz can be accessed via the URL.</p>
+                            </div>
+                            <div class="flex items-center justify-between px-3 sm:px-6 py-4 border-y border-neutral-700 sticky -top-1 bg-neutral-800 z-0">
+                                <p id="score" class="text-white">Score:</p>
+                                <button type="submit" class="text-white text-lg font-bold rounded-sm bg-blue-500 px-2 py-1 pb-[2px] transform -translate-y-[2px] hover:bg-blue-600">Submit</button>
+                            </div>
+                            {{ range $index, $question := .quiz.Questions }}
+                                <div class="flex flex-col quiz-question {{ if eq $index 1 }}border-none {{ else }}border-t border-t-neutral-700{{ end }} bg-neutral-800">
+                                    <h2 class="text-neutral-400 bg-black/10 text-lg font-bold px-3 sm:px-6 py-4 pb-3">{{ $question.Title }}</h2>
+                                    <ol class="list-inside marker:text-blue-500 flex flex-col gap-3 px-3 sm:px-6 py-4" style="list-style-type: upper-alpha;">
+                                        {{ range $i, $answer := $question.Answers }}
+                                            <li class="py-1 text-neutral-400">
+                                                <div class="flex justify-between items-center">
+                                                    <p class="font-light">{{ $answer }}</p>
+                                                    <input class="pl-8" type="radio" value="{{ $i }}" name="question-{{ $index }}" required>
+                                                </div>
+                                            </li>
+                                        {{ end }}
+                                    </ol>
+                                </div>
+                            {{ end }}
+                        </form>
+                    </div>
+                </div>
+
+
+				<!-- <div class="border rounded-md border-neutral-700 w-full max-w-[800px] max-h-[800px] overflow-y-scroll flex flex-col">
+					<div class="flex flex-col items-start justify-between py-4 px-3 sm:px-6">
                         <div>
                             <a href="/quiz?data={{.data}}" class="text-neutral-200 font-bold text-3xl hover:underline">{{ .quiz.Title }}</a>
                             <div></div>
@@ -33,8 +69,8 @@
 					<form class="flex flex-col" id="questions" hx-get="/check-quiz?data={{ .quiz.CorrectAnswers }}" hx-target="#score" hx-swap="innerHTML">
 						{{ range $index, $question := .quiz.Questions }}
 							<div class="flex flex-col quiz-question border-t border-neutral-700">
-								<h2 class="border-b border-neutral-700 text-neutral-200 text-xl px-6 py-4">{{ $question.Title }}</h2>
-								<ol class="list-inside marker:text-blue-500 flex flex-col gap-3 px-6 py-4" style="list-style-type: upper-alpha;">
+								<h2 class="border-b border-neutral-700 text-neutral-200 text-xl px-3 sm:px-6 py-4">{{ $question.Title }}</h2>
+								<ol class="list-inside marker:text-blue-500 flex flex-col gap-3 px-3 sm:px-6 py-4" style="list-style-type: upper-alpha;">
 									{{ range $i, $answer := $question.Answers }}
 										<li class="py-1 text-neutral-200">
                                             <div class="flex justify-between items-center">
@@ -46,11 +82,11 @@
 								</ol>
 							</div>
 						{{ end }}
-                        <div class="flex items-center justify-between px-6 py-4 border-t border-neutral-700">
+                        <div class="flex items-center justify-between px-3 sm:px-6 py-4 border-t border-neutral-700">
                             <p id="score" class="text-white">Score:</p>
                             <button type="submit" class="bg-blue-500 hover:bg-blue-600 p-2 px-4 text-white rounded-sm">Submit</button>
                         </div>
 					</form>
-				</div>
+				</div> -->
 			</body>
 		</html>

@@ -300,7 +300,7 @@ func checkQuiz(c *gin.Context) {
 func main() {
 	router := gin.New()
 	router.LoadHTMLGlob("templates/*")
-	// router.Static("/images", "./images")
+	router.Static("/static", "./static")
 	router.GET("/", renderForm)
 	router.POST("/send", submitQuiz)
 	router.GET("/quiz", loadQuiz)

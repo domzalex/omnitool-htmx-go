@@ -7,7 +7,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=add_circle" />
-        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="/static/css/output.css">
         <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
         <title>Omnitool.io</title>
     </head>
@@ -18,24 +18,35 @@
         .quiz-question:nth-child(odd) {
             background-color: rgb(52,52,52);
         }
+        .quiz-question:not(:first-of-type) {
+            border-top: solid 1px #404040;
+        }
+        .quiz-question:last-of-type {
+            border-bottom: solid 1px #404040;
+        }
     </style>
-    <body class="bg-neutral-800 h-screen flex items-center justify-center px-3">
-        <nav class="border-neutral-700 border-b w-full p-3 absolute top-0 left-0 pt-4">
+    <body class="bg-neutral-800 h-dvh flex items-center justify-center overflow-hidden">
+        <nav class="border-neutral-700 border-b w-full flex items-center justify-between p-3 fixed top-0 left-0 pt-4">
             <a class="text-white text-2xl font-bold" href="/"><span class="text-neutral-500 pr-1"><</span>Omnitool<span class="text-neutral-500">.</span><span class="text-blue-500">io</span><span class="text-neutral-500 pl-1">/></span></a>
+            <a href="quiz?data=H4sIAAAAAAAA_5SPT0sDMRDFv8ow106V3Xrai0gF9aBQKfiPHuLubBKJCWYmFFv2u0urQql78ZLLe_n95m1x6TUwNnjJ7wkWxW-gQsJFYVGfomCzxWr3_PZuBNR5AQMfxW_OkfAiypqzYPOCTyxIeJdwRThPOXOr3yk21UBYj4M0Fz7tTRD-J7MeCGeHzAfnWwepB3UsDMFEW4xlAS8gPtrAU3WZTcfdkeUqIeF8MtmrOj5520mfvR2xzgbCs79W5dbFFJL9hC7xz7g1v4pXhiIMfcrgVaDPKeqU4_EJ92xaRcLr5e3jPrElmDw6ezj4GEsIR5UdrqKaZlSvhq8AAAD__5FhqOXjAQAA" class="text-white hover:underline">Demo Quiz</a>
         </nav>
 
-        <form class="border rounded-md border-neutral-700 w-full max-w-[800px] max-h-[800px] overflow-y-scroll flex flex-col" hx-post="/send" hx-swap="none">
-            <h1 class="text-white font-bold text-3xl px-6 py-4 border-b border-neutral-700" id="name">Create Quiz</h1>
-            <div class="flex gap-3 px-6 py-4">
-                <input class="rounded-sm bg-neutral-700 px-2 py-1 text-white flex-1" type="text" name="title" placeholder="Title of quiz..." required />
-                <button class="bg-blue-500 rounded-full aspect-square w-9 text-white text-5xl pt-[6px] relative hover:bg-blue-600" style="line-height: 30px;" type="submit" hx-post="/add-question" hx-target="#questions-inner" hx-swap="beforeend">+</button>    
+        <div class="pt-[60px] sm:pt-0 sm:p-3 flex-1 h-full flex items-start justify-start sm:items-center sm:justify-center">
+            <div class="h-[100%] w-full flex items-start sm:items-center sm:justify-center overflow-y-scroll">
+                <form class="sm:border rounded-md border-neutral-700 w-full max-w-[800px] sm:max-h-[800px] flex flex-col" hx-post="/send" hx-swap="none">
+                    <div class="flex justify-between items-center sm:px-6 px-3 py-4 pb-3 border-b border-neutral-700">
+                        <h1 class="text-white font-bold text-xl sm:text-3xl" id="name">Create Quiz</h1>
+                        <button class="text-white text-lg font-bold rounded-sm bg-blue-500 px-2 py-1 pb-[2px] transform -translate-y-[2px] hover:bg-blue-600" type="submit">Finish</button>
+                    </div>
+                    <div class="flex gap-3 px-3 sm:px-6 py-4 border-b border-b-neutral-700 sm:border-none">
+                        <input class="rounded-sm bg-neutral-700 px-2 py-1 text-white flex-1" type="text" name="title" placeholder="Title of quiz..." required />
+                        <button class="bg-blue-500 rounded-full aspect-square w-9 text-white text-5xl pt-[6px] relative hover:bg-blue-600" style="line-height: 30px;" type="submit" hx-post="/add-question" hx-target="#questions-inner" hx-swap="beforeend">+</button>    
+                    </div>
+                    <div id="questions" class="flex flex-col gap-3">
+                        <div class="flex flex-col" id="questions-inner"></div>
+                    </div>
+                </form>
             </div>
-            <div id="questions" class="flex flex-col gap-3">
-                <div class="flex flex-col" id="questions-inner"></div>
-            </div>
-            <div class="px-6 py-4 flex items-center justify-center border-t border-neutral-700">
-                <button class="text-white rounded-sm bg-blue-500 px-2 py-1 hover:bg-blue-600" type="submit">Finish</button>
-            </div>
-        </form>
+        </div>
     </body>
 </html>
